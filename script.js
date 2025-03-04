@@ -1,6 +1,8 @@
+// Importar funções do Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
+// Configuração do Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyAqZBVNO_jIjah9v-Tp_Axy1LoMLkaINPU",
     authDomain: "device-streaming-9e3b934a.firebaseapp.com",
@@ -13,9 +15,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Função para carregar inscrições
 async function carregarInscricoes() {
     const tbody = document.getElementById("inscricoes-list");
     tbody.innerHTML = "";
+
     const alunosSnapshot = await getDocs(collection(db, "alunos"));
     const inscricoes = [];
 
@@ -30,8 +34,10 @@ async function carregarInscricoes() {
         }
     });
 
+    // Ordenar por eletiva para melhor visualização
     inscricoes.sort((a, b) => a.eletiva.localeCompare(b.eletiva));
 
+    // Preencher a tabela
     inscricoes.forEach(inscricao => {
         tbody.innerHTML += `<tr>
             <td>${inscricao.eletiva}</td>
@@ -41,4 +47,8 @@ async function carregarInscricoes() {
     });
 }
 
-carregarInscricoes();
+// Adicionar evento ao botão para atualizar inscrições
+document.getElementById("atualizar-btn").addEventListener("click", carregarInscricoes);
+
+// Carregar as inscrições ao iniciar
+document.addEventListener("DOMContentLoaded", carregarInscricoes);
