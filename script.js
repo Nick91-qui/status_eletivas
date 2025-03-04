@@ -17,8 +17,8 @@ const db = getFirestore(app);
 
 // Função para carregar inscrições
 async function carregarInscricoes() {
-    const tbody = document.getElementById("inscricoes-list");
-    tbody.innerHTML = "";
+    const tbody = document.querySelector("#inscricoes-list tbody"); // Seleciona o <tbody> dentro da tabela
+    tbody.innerHTML = ""; // Limpa a tabela antes de adicionar novos dados
 
     const alunosSnapshot = await getDocs(collection(db, "alunos"));
     const inscricoes = [];
@@ -37,13 +37,15 @@ async function carregarInscricoes() {
     // Ordenar por eletiva para melhor visualização
     inscricoes.sort((a, b) => a.eletiva.localeCompare(b.eletiva));
 
-    // Preencher a tabela
+    // Adicionar dados à tabela
     inscricoes.forEach(inscricao => {
-        tbody.innerHTML += `<tr>
+        const row = document.createElement("tr");
+        row.innerHTML = `
             <td>${inscricao.eletiva}</td>
             <td>${inscricao.turma}</td>
             <td>${inscricao.nomeAluno}</td>
-        </tr>`;
+        `;
+        tbody.appendChild(row);
     });
 }
 
