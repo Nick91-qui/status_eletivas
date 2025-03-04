@@ -32,9 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const aluno = doc.data();
             if (aluno.inscrito) {
                 inscricoes.push({
-                    eletiva: alunos.eletiva,
-                    turma: alunos.turma,
-                    nomeAluno: alunos.nomeAluno
+                    eletiva: aluno.eletiva,
+                    turma: aluno.turma,
+                    nomeAluno: aluno.nomeAluno
                 });
             }
         });
